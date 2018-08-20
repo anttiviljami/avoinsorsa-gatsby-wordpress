@@ -8,6 +8,10 @@ vendor/*
 terraform.tfstate.backup
 .terraform
 
+node_modules/*
+.cache/*
+public/*
+
 # WordPress core
 htdocs/wordpress
 

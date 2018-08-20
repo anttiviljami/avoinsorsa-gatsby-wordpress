@@ -98,6 +98,7 @@ define( 'S3_UPLOADS_REGION', env( 'S3_UPLOADS_REGION' ) );
 /**
  * Custom Settings
  */
+define( 'WP_USE_THEMES', false ); // headless wordpress
 define( 'AUTOMATIC_UPDATER_DISABLED', true );
 define( 'DISABLE_WP_CRON', env( 'DISABLE_WP_CRON' ) ?: false );
 define( 'DISALLOW_FILE_EDIT', true );
