@@ -19,7 +19,7 @@ The Holy Grail WordPress project template for Heroku deployment and local Docker
 - [x] Heroku PHP7 & Node 8 application runtime
 - [x] Heroku Redis Cache
 - [x] AWS S3 for media uploads
-- [x] AWS RDS for MariaDB
+- [x] Heroku JawsDB for MariaDB
 - [x] Papertrail log management
 - [x] NPM scripts for ease of use
 

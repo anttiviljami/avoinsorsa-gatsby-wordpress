@@ -1,26 +1,3 @@
-# Random password for database
-resource "random_id" "dev" {
-  keepers = {
-    project_name = "${var.project_name}"
-  }
-  byte_length = 16
-}
-
-# RDS MariaDB instance
-resource "aws_db_instance" "dev" {
-  engine = "mariadb"
-  identifier = "${var.project_name}-dev"
-  allocated_storage = 5
-  engine_version = "10.1.23"
-  instance_class = "db.t2.micro"
-  name = "wordpress"
-  username = "wordpress"
-  password = "${random_id.dev.hex}"
-  publicly_accessible = true
-  vpc_security_group_ids = ["${aws_security_group.default.id}"]
-  final_snapshot_identifier = "${var.project_name}-dev"
-}
-
 # IAM user for S3 bucket
 resource "aws_iam_user" "dev" {
   name = "${var.project_name}-dev-user"
@@ -81,12 +58,17 @@ resource "heroku_app" "dev" {
   ]
   config_vars {
     WP_ENV = "dev"
-    DATABASE_URL = "mysql://wordpress:${random_id.dev.hex}@${aws_db_instance.dev.address}/wordpress"
     S3_UPLOADS_BUCKET = "${aws_s3_bucket.dev.id}"
     S3_UPLOADS_KEY = "${aws_iam_access_key.dev.id}"
     S3_UPLOADS_SECRET = "${aws_iam_access_key.dev.secret}"
     S3_UPLOADS_REGION = "${var.aws_region}"
   }
+}
+
+# Heroku JawsDB Maria
+resource "heroku_addon" "maria-dev" {
+  app = "${heroku_app.dev.name}"
+  plan = "jawsdb-maria:kitefin"
 }
 
 # Heroku Redis
