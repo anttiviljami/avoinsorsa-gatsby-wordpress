@@ -8,11 +8,14 @@ resource "aws_iam_access_key" "dev" {
   user = "${aws_iam_user.dev.name}"
 }
 
-# S3 bucket for uploads
+# S3 bucket for site
 resource "aws_s3_bucket" "dev" {
-  bucket = "${var.project_name}-dev-uploads"
+  bucket = "${var.project_name}-dev"
   acl = "public-read"
   force_destroy = "true"
+  website {
+    index_document = "index.html"
+  }
 }
 
 # Grant full access to the bucket
